@@ -23,7 +23,7 @@ const playerSides = {
   computer: "computer-cards",
 };
 
-const pathImages = "./src/assets/icons";
+const pathImages = "./src/assets/icons/";
 const cardData = [
   {
     id: 0,
@@ -64,16 +64,22 @@ async function createCardImage(idCard, fieldSide) {
   cardImage.classList.add("card");
 
   if (fieldSide === playerSides.player1) {
+    cardImage.addEventListener("mouseover", () => {
+      drawSelectCard(idCard);
+    });
+
     cardImage.addEventListener("click", () => {
       setCardField(cardImage.getAttribute("data-id"));
     });
   }
 
-  cardImage.addEventListener("mouseover", () => {
-    drawSelectCard(idCard);
-  });
-
   return cardImage;
+}
+
+async function drawSelectCard(index) {
+  state.cardsSprites.avatar.src = cardData[index].img;
+  state.cardsSprites.name.innerText = cardData[index].name;
+  state.cardsSprites.type.innerText = "Attribute : " + cardData[index].type;
 }
 
 async function drawCards(cardNumbers, fieldSide) {
